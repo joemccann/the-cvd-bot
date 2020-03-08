@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="opensnitch" src="assets/img/botpic.jpg" />
+  <img alt="CVD-19 Virus" src="assets/img/botpic.jpg" />
 </p>
 
 # The CVD Bot

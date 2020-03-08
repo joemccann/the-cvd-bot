@@ -54,7 +54,6 @@ ngrok http 7071 -host-header=the-cvd-bot
 
 - Now copy/paste the `ngrok` URL into your `local.settings.json` file and append `/api/bot` to the URL.  This serves as a proxy to your webhook when developing locally.
 
-
 ## Deployment
 
 For a production deployment, this repo targets Azure. You'll need an [Azure](portal.azure.com) account that has its payment active as you'll need to publish this Azure Function to obtain your production Webhook API (i.e. your-unique-name.azurewebsites.net).
@@ -79,11 +78,9 @@ WEBHOOK_ADDRESS: YOUR-AZURE-WEBSITES-PRODUCTION-URL
   <img alt="CVD-19 Virus" src="assets/img/application-settings.png" />
 </p>
 
-
 Save these setting and confirm a restart of your Azure Function.
 
 Navigate to your bot and test out the commands.
-
 
 ## Tests
 
@@ -96,6 +93,16 @@ npm test
 
 - Stats provided by https://corona.lmao.ninja/all
 - News articles scraped from https://jerrybrito.com/coronafeed/
+
+## Contributing
+
+The general guidelines for contributing are:
+
+- Does it fix a bug?
+- Does it break anything?
+- Does it stick to the original goal of The CVD Bot (a informational Telegram bot to keep up withg the CVD-19 virus)
+- Does it reduce the build size?
+- Is it necessary?
 
 ## Contributors
 

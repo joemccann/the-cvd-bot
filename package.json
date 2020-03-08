@@ -1,6 +1,7 @@
 {
   "name": "the-cvd-bot",
   "version": "1.0.0",
+  "repository": "https://github.com/joemccann/the-cvd-bot",
   "description": "A free, open source Telegram Bot for keeping up to date on the Coronavirus with the latest news and statistics.",
   "scripts": {
     "pretest": "standard .",

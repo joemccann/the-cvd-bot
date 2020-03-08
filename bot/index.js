@@ -20,7 +20,7 @@ module.exports = async function (context, request) {
 
   const { err, data: body } = await bot(update)
   //
-  // by default anyway but let's set for testing...
+  // By default anyway but let's set for testing...
   //
   let status = 200
 
@@ -38,10 +38,6 @@ module.exports = async function (context, request) {
   }
 
   const { req, res } = context
-  console.log('--------------------------')
-  console.dir(req)
-  console.log('--------------------------')
-  console.dir(res)
 
-  return { data: res, status: res.status }
+  return { data: res, status: res.status, req }
 }

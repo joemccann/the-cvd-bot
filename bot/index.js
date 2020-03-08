@@ -7,25 +7,25 @@ module.exports = async function (context, request) {
 
   let update = null
 
+  //
+  // By default anyway and we must leave it as Telegram will retry forever.
+  //
+  const status = 200
+
   try {
     update = JSON.parse(rawBody)
   } catch (err) {
     context.res = {
       body: err,
-      status: 500
+      status
     }
 
     return { err }
   }
 
   const { err, data: body } = await bot(update)
-  //
-  // By default anyway but let's set for testing...
-  //
-  let status = 200
 
   if (err) {
-    status = 500
     context.res = {
       body: err.message,
       status

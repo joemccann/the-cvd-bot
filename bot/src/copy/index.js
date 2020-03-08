@@ -35,8 +35,7 @@ const Commands = {
 }
 
 const Errors = {
-  unrecognizedCommand: stripIndent`Hmm, that's not a recognized command. ` +
-  'Please try again.'
+  unrecognizedCommand: stripIndent`Hmm, that's not a recognized command. Please try again.`
 }
 
 const ChatActions = {

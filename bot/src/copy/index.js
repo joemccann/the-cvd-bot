@@ -25,8 +25,12 @@ const HelpList = {
 const Commands = {
   list: stripIndent`
   /help - Show the list of available commands.
+
   /news - Get the latest news on Coronavirus.
-  /stats - Shows the latest global statics for CVD-19.
+
+  /start - Let's try this again.
+
+  /stats - Shows the latest global statistics for CVD-19.
   `
 }
 

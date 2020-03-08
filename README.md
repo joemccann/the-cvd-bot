@@ -13,9 +13,11 @@ You can also choose to run it yourself or you can contribute to this project.
 ## Requirements
 
 - [Microsoft Azure](https://portal.azure.com) Account
+- [Telegram](https://telegram.org) Account
 - [VS Code](https://code.visualstudio.com/) for Production Deployment and Local Development
-- [Azure Functions](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions) VS Code Extension
+- [Azure Functions](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions) VS Code Extension for Local Development
 - [ngrok](https://ngrok.com/download) for Local Development
+- [Node.js LTS Version](https://nodejs.org/en/about/releases/)
 
 ## Hacking
 
@@ -56,6 +58,44 @@ ngrok http 7071 -host-header=the-cvd-bot
 ## Deployment
 
 For a production deployment, this repo targets Azure. You'll need an [Azure](portal.azure.com) account that has its payment active as you'll need to publish this Azure Function to obtain your production Webhook API (i.e. your-unique-name.azurewebsites.net).
+
+Upon a successful first deployment, you'll need to add some production environment variables.
+
+In the Azure portal, navigate to the application settings within the Azure Function Configuration page for your CVD Bot Azure Function:
+
+<p align="center">
+  <img alt="CVD-19 Virus" src="assets/img/azure-function-config.png" />
+</p>
+
+You'll need to add (+) a new application setting for each of the following names and their values:
+
+```sh
+PRODUCITON: true
+TELEGRAM_BOT_TOKEN: YOUR-TELEGRAM-BOT-TOKEN
+WEBHOOK_ADDRESS: YOUR-AZURE-WEBSITES-PRODUCTION-URL
+```
+
+<p align="center">
+  <img alt="CVD-19 Virus" src="assets/img/application-settings.png" />
+</p>
+
+
+Save these setting and confirm a restart of your Azure Function.
+
+Navigate to your bot and test out the commands.
+
+
+## Tests
+
+```sh
+npm i -D
+npm test
+```
+
+## Sources
+
+- Stats provided by https://corona.lmao.ninja/all
+- News articles scraped from https://jerrybrito.com/coronafeed/
 
 ## Contributors
 

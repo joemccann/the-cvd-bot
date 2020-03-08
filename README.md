@@ -100,7 +100,7 @@ The general guidelines for contributing are:
 
 - Does it fix a bug?
 - Does it break anything?
-- Does it stick to the original goal of The CVD Bot (a informational Telegram bot to keep up withg the CVD-19 virus)
+- Does it stick to the original goal of The CVD Bot (an informational Telegram bot to keep up withg the CVD-19 virus)
 - Does it reduce the build size?
 - Is it necessary?
 

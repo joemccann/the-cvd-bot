@@ -33,19 +33,24 @@ async function newsMessage (bot, id) {
 
   const links = []
 
-  articles.slice(0, 4).forEach(article => {
+  articles.slice(0, 5).forEach(async (article) => {
     const {
       title,
       url
     } = article
-    links.push(`[${title}](${url})`)
+    const msg = `[${title}](${url})`
+    links.push(msg)
+
+    await bot.sendMessage(id, msg, {
+      parse_mode: 'Markdown'
+    })
   })
 
-  const message = stripIndent`${links.join('\n\n')}`
+  // const message = stripIndent`${links.join('\n\n')}`
 
-  await bot.sendMessage(id, message, {
-    parse_mode: 'Markdown'
-  })
+  // await bot.sendMessage(id, message, {
+  //   parse_mode: 'Markdown'
+  // })
 }
 
 async function statsMessage (bot, id) {

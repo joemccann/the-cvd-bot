@@ -4,15 +4,19 @@ const cheerio = require('cheerio')
 const extract = ($) => {
   const articles = []
   const parse = function (i, elem) {
-    const children = $(this).children()
-    const text = $(this).text().split(' - ')
+    try {
+      const children = $(this).children()
+      const text = $(this).text().split(' - ')
 
-    articles.push({
-      img: children[0].attribs.src,
-      url: children[1].attribs.href,
-      title: text[0].trim(),
-      timestamp: text[1]
-    })
+      articles.push({
+        img: children[0].attribs.src,
+        url: children[1].attribs.href,
+        title: text[0].trim(),
+        timestamp: text[1]
+      })
+    } catch (error) {
+      console.error(error)
+    }
   }
   $('li').each(parse)
   return articles

@@ -42,7 +42,7 @@ module.exports = async (data) => {
   //
   // Check for additional input after slash command
   //
-  const inputs = text.split(' ')
+  const inputs = text && text.split(' ')
   const input = inputs ? inputs[1] : null
 
   try {

@@ -36,20 +36,28 @@ const COMMANDS = {
 }
 
 module.exports = async (data) => {
-  const { message } = data
-  const { text, chat } = message
-  const { id } = chat
+  const { message = {} } = data
+  const { text = '', chat = {} } = message
+  const { id = '' } = chat
+
+  //
+  // Bail early if there is no Chat ID.
+  //
+  if (!id) {
+    await bot.sendMessage(id, Errors.missingChatId)
+    return { err: new Error(Errors.missingChatId) }
+  }
   //
   // Check for additional input after slash command
   //
-  const inputs = text && text.split(' ')
-  const input = inputs ? inputs[1] : null
-
   try {
+    const inputs = text && text.split(' ')
+    const input = inputs ? inputs[1] : null
+
     // Validate message whether text is a command.
     if (text.indexOf('/') !== 0) {
       await bot.sendMessage(id, Errors.unrecognizedCommand)
-      return { err: Errors.unrecognizedCommand }
+      return { err: new Error(Errors.unrecognizedCommand) }
     }
 
     //
@@ -67,7 +75,7 @@ module.exports = async (data) => {
     //
     if (!exec) {
       await bot.sendMessage(id, Errors.unrecognizedCommand)
-      return { err: Errors.unrecognizedCommand }
+      return { err: new Error(Errors.unrecognizedCommand) }
     }
 
     //
@@ -82,6 +90,7 @@ module.exports = async (data) => {
   } catch (err) {
     bot.sendMessage(id, oneLine`
     CVD-19 bot encountered a bizarre error: ${err.message}
+    Contact @linestepper with your issue.
     `)
     return { err }
   }

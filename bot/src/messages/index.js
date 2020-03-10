@@ -45,12 +45,6 @@ async function newsMessage (bot, id) {
       parse_mode: 'Markdown'
     })
   })
-
-  // const message = stripIndent`${links.join('\n\n')}`
-
-  // await bot.sendMessage(id, message, {
-  //   parse_mode: 'Markdown'
-  // })
 }
 
 async function statsMessage (bot, id) {

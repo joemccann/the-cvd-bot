@@ -23,11 +23,16 @@ async function helpMessage (bot, id) {
 }
 
 async function newsMessage (bot, id) {
-  const { err, data: { articles } } = await news()
+  const { err, data: { articles = [] } } = await news()
 
   if (err) {
     console.error(err)
     await bot.sendMessage(id, err.message)
+    return
+  }
+
+  if (!articles.length) {
+    await bot.sendMessage(id, `😕 Sorry our source for news is currently unavailable.`)
     return
   }
 
@@ -48,12 +53,17 @@ async function newsMessage (bot, id) {
 }
 
 async function statsMessage (bot, id) {
-  const { err, data: { cases, deaths, recovered } } = await stats()
+  const { err, data: { cases = 0, deaths = 0, recovered = 0 } } = await stats()
 
-  if (err) {
+  if (!cases || !deaths || !recovered) {
     console.error(err.message)
     console.error(err.stack)
     await bot.sendMessage(id, err.message)
+    return
+  }
+
+  if (!cases || !deaths || !recovered) {
+    await bot.sendMessage(id, `😕 Sorry our source for stats is currently unavailable.`)
     return
   }
 

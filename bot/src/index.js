@@ -22,6 +22,7 @@ const {
 } = require('./copy')
 
 const {
+  countryMessage,
   helpMessage,
   newsMessage,
   statsMessage,
@@ -29,6 +30,7 @@ const {
 } = require('./messages')
 
 const COMMANDS = {
+  country: countryMessage,
   help: helpMessage,
   news: newsMessage,
   stats: statsMessage,

@@ -34,6 +34,7 @@ module.exports = async ({ URL = '', country = '' }) => {
       data = data.filter(el => {
         return el.countryName.toUpperCase() === upperCasedCountry
       })
+      if (!data.length) return { err: new Error(`No data for ${country}.`) }
       return { data }
     }
   } catch (err) {

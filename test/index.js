@@ -29,6 +29,15 @@ test('fail country - absent parameter', async t => {
   t.end()
 })
 
+test('fail country - no record', async t => {
+  const { err, data } = await country({ country: 'Ethiopia' })
+
+  t.ok(!data)
+  t.ok(err)
+  t.equals(err.message, 'No data for Ethiopia.')
+  t.end()
+})
+
 test('pass country by name', async t => {
   const { err, data } = await country({ country: 'Italy' })
 

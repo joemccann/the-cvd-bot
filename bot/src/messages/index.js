@@ -1,6 +1,7 @@
-const { news, stats } = require('../commands/')
-
+const { country, news, stats } = require('../commands/')
+const countryFlagEmoji = require('country-flag-emoji')
 const {
+  oneLine,
   stripIndent
 } = require('common-tags')
 
@@ -32,7 +33,7 @@ async function newsMessage (bot, id) {
   }
 
   if (!articles.length) {
-    await bot.sendMessage(id, `😕 Sorry our source for news is currently unavailable.`)
+    await bot.sendMessage(id, '😕 Sorry our source for news is currently unavailable.')
     return
   }
 
@@ -63,7 +64,7 @@ async function statsMessage (bot, id) {
   }
 
   if (!cases || !deaths || !recovered) {
-    await bot.sendMessage(id, `😕 Sorry our source for stats is currently unavailable.`)
+    await bot.sendMessage(id, '😕 Sorry our source for stats is currently unavailable.')
     return
   }
 
@@ -80,7 +81,64 @@ async function statsMessage (bot, id) {
   })
 }
 
+async function countryMessage (bot, id, input) {
+  const { err, data } = await country({ country: input })
+  if (err) {
+    console.error(err.message)
+    console.error(err.stack)
+    await bot.sendMessage(id, oneLine`😕 Sorry there was an error while
+    trying to get country data: ${err.message}`)
+    return
+  }
+
+  if (input.toUpperCase() === 'ALL') {
+    //
+    await bot.sendMessage(id, oneLine`To get stats 
+    for all countries combined just use the /stats command.`)
+    await bot.sendMessage(id, oneLine`We will provide a country report soon.`)
+    return
+  }
+
+  try {
+    const {
+      countryCode,
+      countryName,
+      dateAsOf,
+      confirmed,
+      deaths,
+      recovered
+    } = data[0]
+
+    const date = new Date(dateAsOf)
+
+    const message = stripIndent`
+
+  Stats for ${countryName} ${(countryFlagEmoji.get(countryCode)).emoji}
+
+  🦠 Total Number of Cases: *${(confirmed).toLocaleString('en')}* 
+
+  💀 Total Number of Deaths: *${(deaths).toLocaleString('en')}* 
+
+  🤞🏼 Total Number of Recoveries: *${(recovered).toLocaleString('en')}* 
+
+  📅 Last Update: *${date.toTimeString()}*
+  `
+
+    await bot.sendMessage(id, message, {
+      parse_mode: 'Markdown'
+    })
+  } catch (err) {
+    console.error(err.message)
+    console.error(err.stack)
+    await bot.sendMessage(id, oneLine`😕 Sorry there was an error while
+    trying to get send your message for the country's data: ${err.message}`)
+
+    return { err }
+  }
+}
+
 module.exports = {
+  countryMessage,
   helpMessage,
   newsMessage,
   startMessage,

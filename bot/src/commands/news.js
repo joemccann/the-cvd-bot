@@ -32,7 +32,7 @@ module.exports = async (URL) => {
 
     const html = await response.text()
     const $ = cheerio.load(html)
-    const articles = extract($)
+    const articles = extract($) || []
 
     return { data: { articles } }
   } catch (err) {

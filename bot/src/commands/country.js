@@ -16,8 +16,6 @@ module.exports = async ({ URL = '', country = '' }) => {
       err: new Error('Please provide a country or two-letter country code.')
     }
   }
-
-  console.log(`.......................${country}`)
   try {
     const response = await fetch(COUNTRY_URL)
     if (!response.ok) return { err: new Error(response.statusText) }

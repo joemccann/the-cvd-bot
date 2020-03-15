@@ -81,7 +81,22 @@ async function statsMessage (bot, id) {
   })
 }
 
-async function countryMessage (bot, id, input) {
+async function countryMessage (bot, id, input, inputs) {
+  //
+  // In the case the country is more than one word aka "South Africa"
+  //
+  try {
+    if (Array.isArray(inputs) && inputs.length) {
+      inputs.shift()
+      input = inputs.join(' ')
+    }
+  } catch (err) {
+    console.error(err.message)
+    console.error(err.stack)
+    await bot.sendMessage(id, oneLine`😕 Sorry there was an error while
+    trying to get the country's data: ${err.message}`)
+    return
+  }
   const { err, data } = await country({ country: input })
   if (err) {
     console.error(err.message)
@@ -92,22 +107,41 @@ async function countryMessage (bot, id, input) {
   }
 
   if (input.toUpperCase() === 'ALL') {
-    //
     await bot.sendMessage(id, oneLine`To get stats 
     for all countries combined just use the /stats command.`)
     await bot.sendMessage(id, oneLine`We will provide a country report soon.`)
     return
   }
 
+  if (Array.isArray(data) && !data.length) {
+    await bot.sendMessage(id, oneLine`😕 
+      Sorry the country ${input} returned no data.`)
+    await bot.sendMessage(id, oneLine`✍🏽 Try typing the [ISO country code](https://www.nationsonline.org/oneworld/country_code_list.htm) 
+      instead of what you previously typed.`, {
+      parse_mode: 'Markdown'
+    })
+    return { err: new Error(`No data for ${input}.`) }
+  }
+
   try {
     const {
-      countryCode,
-      countryName,
-      dateAsOf,
-      confirmed,
-      deaths,
-      recovered
+      countryCode = '',
+      countryName = '',
+      dateAsOf = (new Date()).toDateString(),
+      confirmed = 0,
+      deaths = 0,
+      recovered = 0
     } = data[0]
+
+    if (!countryCode || !countryName) {
+      await bot.sendMessage(id, oneLine`😕 
+      Sorry the country ${input} was not available in our sources.`)
+      await bot.sendMessage(id, oneLine`✍🏽 Try typing the [ISO country code](https://www.nationsonline.org/oneworld/country_code_list.htm) 
+      instead of what you previously typed.`, {
+        parse_mode: 'Markdown'
+      })
+      return { err: new Error(`Country ${input} not found.`) }
+    }
 
     const date = new Date(dateAsOf)
 

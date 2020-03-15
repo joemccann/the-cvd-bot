@@ -30,11 +30,14 @@ const {
 } = require('./messages')
 
 const COMMANDS = {
+  c: countryMessage,
   country: countryMessage,
   help: helpMessage,
+  n: newsMessage,
   news: newsMessage,
-  stats: statsMessage,
-  start: startMessage
+  start: startMessage,
+  s: statsMessage,
+  stats: statsMessage
 }
 
 module.exports = async (data) => {

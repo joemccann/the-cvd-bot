@@ -68,12 +68,23 @@ async function statsMessage (bot, id) {
     return
   }
 
+  let cfr = 0
+
+  try {
+    cfr = ((deaths / cases) * 100).toFixed(2) + '%'
+  } catch (err) {
+    cfr = '0.0%'
+    console.error(err.message)
+  }
+
   const message = stripIndent`
   🦠 Total Number of Cases: *${(cases).toLocaleString('en')}* 
 
   💀 Total Number of Deaths: *${(deaths).toLocaleString('en')}* 
 
   🤞🏼 Total Number of Recoveries: *${(recovered).toLocaleString('en')}* 
+
+  ⚰️  Case Fatality Rate: *${(cfr).toLocaleString('en')}* 
   `
 
   await bot.sendMessage(id, message, {
@@ -123,6 +134,8 @@ async function countryMessage (bot, id, input, inputs) {
     return { err: new Error(`No data for ${input}.`) }
   }
 
+  let cfr = 0
+
   try {
     const {
       countryCode = '',
@@ -143,6 +156,7 @@ async function countryMessage (bot, id, input, inputs) {
       return { err: new Error(`Country ${input} not found.`) }
     }
 
+    cfr = ((deaths / confirmed) * 100).toFixed(2) + '%'
     const date = new Date(dateAsOf)
 
     const message = stripIndent`
@@ -154,6 +168,8 @@ async function countryMessage (bot, id, input, inputs) {
   💀 Total Number of Deaths: *${(deaths).toLocaleString('en')}* 
 
   🤞🏼 Total Number of Recoveries: *${(recovered).toLocaleString('en')}* 
+
+  ⚰️  Case Fatality Rate: *${(cfr).toLocaleString('en')}* 
 
   📅 Last Update: *${date.toTimeString()}*
   `

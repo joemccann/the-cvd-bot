@@ -117,12 +117,12 @@ test('pass stats', async t => {
   t.ok(data)
   t.ok(!err)
 
-  const { cases, deaths, recovered } = data
+  const { cases, deaths, recovered, updated } = data
 
   t.ok(cases)
   t.ok(deaths)
   t.ok(recovered)
-
+  t.ok(updated)
   t.end()
 })
 

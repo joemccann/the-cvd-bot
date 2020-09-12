@@ -12,7 +12,7 @@
     "cheerio": "^1.0.0-rc.3",
     "common-tags": "^1.8.0",
     "country-flag-emoji": "^1.0.3",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "node-telegram-bot-api": "^0.40.0",
     "tgfancy": "^0.13.0"
   },
